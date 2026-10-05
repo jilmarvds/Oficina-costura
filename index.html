@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Oficina">
 <link rel="manifest" id="manifestLink">
-<title>Oficina de Costura</title>
+<title>Bordados Vieira — Gestão</title>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════
@@ -748,9 +748,19 @@ footer-bar{
 </head>
 <body>
 <div id="splash">
-  <div class="splash-icon">🧵</div>
-  <div class="splash-title">Oficina de Costura</div>
-  <div class="splash-sub">JIL Bordados</div>
+  <div class="splash-icon" style="background:#13212b;padding:0">
+    <svg width="60" height="60" viewBox="-58 -58 116 116" xmlns="http://www.w3.org/2000/svg">
+      <rect x="-50" y="-50" width="100" height="100" fill="none" stroke="#2a9d8f" stroke-width="6"/>
+      <rect x="-50" y="-30" width="100" height="14" fill="#2a9d8f"/>
+      <rect x="-50" y="-7" width="100" height="14" fill="#46b8aa"/>
+      <rect x="-50" y="16" width="100" height="14" fill="#2a9d8f"/>
+      <rect x="-30" y="-50" width="14" height="100" fill="#e9c46a"/>
+      <rect x="-7" y="-50" width="14" height="100" fill="#f4d58a"/>
+      <rect x="16" y="-50" width="14" height="100" fill="#e9c46a"/>
+    </svg>
+  </div>
+  <div class="splash-title">Bordados Vieira</div>
+  <div class="splash-sub">Gestão da Oficina</div>
   <div class="splash-loader"></div>
 </div>
 <div id="appShell">
@@ -758,9 +768,19 @@ footer-bar{
 <!-- TOP HEADER -->
 <div id="topHeader">
   <div class="app-title">
-    <div class="app-icon" id="headerIcon">🧵</div>
+    <div class="app-icon" id="headerIcon" style="background:#13212b;padding:5px;display:flex;align-items:center;justify-content:center">
+      <svg width="26" height="26" viewBox="-58 -58 116 116" xmlns="http://www.w3.org/2000/svg">
+        <rect x="-50" y="-50" width="100" height="100" fill="none" stroke="#2a9d8f" stroke-width="7"/>
+        <rect x="-50" y="-30" width="100" height="14" fill="#2a9d8f"/>
+        <rect x="-50" y="-7" width="100" height="14" fill="#46b8aa"/>
+        <rect x="-50" y="16" width="100" height="14" fill="#2a9d8f"/>
+        <rect x="-30" y="-50" width="14" height="100" fill="#e9c46a"/>
+        <rect x="-7" y="-50" width="14" height="100" fill="#f4d58a"/>
+        <rect x="16" y="-50" width="14" height="100" fill="#e9c46a"/>
+      </svg>
+    </div>
     <div>
-      <div class="app-name" id="headerName">Oficina de Costura</div>
+      <div class="app-name" id="headerName">Bordados Vieira</div>
       <div class="app-sub" id="headerSub">Gestão Financeira</div>
     </div>
   </div>
@@ -1042,7 +1062,7 @@ footer-bar{
                 <button class="btn btn-ghost" onclick="hGerarTodos()">📄 Gerar Todos</button>
               </div>
               <div id="hPreview" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:0.78rem;display:none">
-                <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-align:center;margin-bottom:4px">JIL BORDADOS</div>
+                <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-align:center;margin-bottom:4px">BORDADOS VIEIRA</div>
                 <div style="text-align:center;font-size:0.68rem;color:var(--muted);margin-bottom:12px" id="hPreviewPeriodo"></div>
                 <table style="width:100%;border-collapse:collapse;font-size:0.75rem">
                   <thead><tr style="border-bottom:2px solid var(--border2)"><th style="text-align:left;padding:4px 0;color:var(--muted)">Descrição</th><th style="text-align:right;padding:4px 0;color:var(--green)">Vencimentos</th><th style="text-align:right;padding:4px 0;color:var(--red)">Descontos</th></tr></thead>
@@ -1068,7 +1088,7 @@ footer-bar{
         </div>
       </div>
     </div>
-    <footer-bar>Oficina de Costura © 2026</footer-bar>
+    <footer-bar>Bordados Vieira © 2026</footer-bar>
   </div>
 
   <!-- ═══════════════ SCREEN: PLANEJAMENTO ═══════════════ -->
@@ -1078,7 +1098,7 @@ footer-bar{
       <!-- HEADER PLANEJAMENTO -->
       <div style="background:linear-gradient(135deg,#1a73e8,#9334e6);border-radius:16px;padding:20px;margin-bottom:16px;color:#fff">
         <div style="font-size:1.2rem;font-weight:700;margin-bottom:4px">🚀 Planejamento Estratégico</div>
-        <div style="font-size:0.78rem;opacity:0.85">JIL Bordados · Franco da Rocha · Crescimento & Expansão</div>
+        <div style="font-size:0.78rem;opacity:0.85">Bordados Vieira · Franco da Rocha · Crescimento & Expansão</div>
       </div>
 
       <!-- CARDS KPI -->
@@ -1235,9 +1255,10 @@ footer-bar{
         <div class="card"><div class="card-accent" style="background:var(--blue)"></div><span class="card-icon">📅</span><div class="card-label">Hoje</div><div class="card-value" id="pCardHoje" style="color:var(--blue)">R$ 0</div><div class="card-sub">do dia</div></div>
       </div>
       <!-- Cards por cliente -->
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px">
-        <div class="card"><div class="card-accent" style="background:#7b3fa0"></div><span class="card-icon">👤</span><div class="card-label">Fábio</div><div class="card-value" id="pCardFabio" style="color:#7b3fa0">R$ 0</div><div class="card-sub" id="pCardFabioSub">0 peças</div></div>
-        <div class="card"><div class="card-accent" style="background:#1a6b8a"></div><span class="card-icon">👤</span><div class="card-label">Wellington</div><div class="card-value" id="pCardWellington" style="color:#1a6b8a">R$ 0</div><div class="card-sub" id="pCardWellingtonSub">0 peças</div></div>
+      <div class="cards-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px">
+        <div class="card"><div class="card-accent" style="background:#7b3fa0"></div><span class="card-icon">👤</span><div class="card-label">Fábio</div><div class="card-value" id="pCardFabio" style="color:#7b3fa0;font-size:1.05rem">R$ 0</div><div class="card-sub" id="pCardFabioSub">0 peças</div></div>
+        <div class="card"><div class="card-accent" style="background:#1a6b8a"></div><span class="card-icon">👤</span><div class="card-label">Wellington</div><div class="card-value" id="pCardWellington" style="color:#1a6b8a;font-size:1.05rem">R$ 0</div><div class="card-sub" id="pCardWellingtonSub">0 peças</div></div>
+        <div class="card"><div class="card-accent" style="background:#c2691d"></div><span class="card-icon">👤</span><div class="card-label" id="pCardCliente3Label">Cliente 3</div><div class="card-value" id="pCardCliente3" style="color:#c2691d;font-size:1.05rem">R$ 0</div><div class="card-sub" id="pCardCliente3Sub">0 peças</div></div>
       </div>
 
       <!-- Tabs clientes -->
@@ -1245,6 +1266,7 @@ footer-bar{
         <div class="tabs">
           <button class="tab-btn active" onclick="pSwitchTab('fabio',this)">👤 Fábio</button>
           <button class="tab-btn" onclick="pSwitchTab('wellington',this)">👤 Wellington</button>
+          <button class="tab-btn" onclick="pSwitchTab('cliente3',this)" id="pTabBtn3">👤 <span id="pTabName3">Cliente 3</span></button>
         </div>
 
         <!-- TAB FÁBIO -->
@@ -1278,6 +1300,7 @@ footer-bar{
               <span class="panel-title" id="pListTitleFabio">Fábio — Mai/2026</span>
               <div style="display:flex;gap:8px;align-items:center">
                 <div class="list-total-badge" id="pListTotalFabio" style="color:#7b3fa0;border-color:rgba(123,63,160,0.3);background:rgba(123,63,160,0.08)">R$ 0</div>
+                <button class="btn btn-sm" style="background:#1a73e8" onclick="gerarReciboCliente('fabio')">📄 Recibo</button>
                 <button class="btn btn-gold btn-sm" onclick="pOpenSync('fabio')">↗ Gestão</button>
               </div>
             </div>
@@ -1316,15 +1339,56 @@ footer-bar{
               <span class="panel-title" id="pListTitleWellington">Wellington — Mai/2026</span>
               <div style="display:flex;gap:8px;align-items:center">
                 <div class="list-total-badge" id="pListTotalWellington" style="color:#1a6b8a;border-color:rgba(26,107,138,0.3);background:rgba(26,107,138,0.08)">R$ 0</div>
+                <button class="btn btn-sm" style="background:#1a73e8" onclick="gerarReciboCliente('wellington')">📄 Recibo</button>
                 <button class="btn btn-gold btn-sm" onclick="pOpenSync('wellington')">↗ Gestão</button>
               </div>
             </div>
             <div id="pProdListWellington"><div class="empty-state">Nenhuma produção registrada</div></div>
           </div>
         </div>
+
+        <!-- TAB CLIENTE 3 -->
+        <div class="tab-panel" id="ptab-cliente3">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Registrar — <span id="pName3Title">Cliente 3</span></span>
+              <div class="valor-edit-wrap"><span style="font-size:0.65rem;color:var(--muted)">R$/peça:</span><input class="valor-edit-input" type="number" id="c3ValorUnit" value="2" min="0.01" step="0.50" onchange="c3UpdatePreview()"></div>
+            </div>
+            <div class="panel-body">
+              <div class="field-group" style="margin-bottom:10px"><label class="field-label">Nome do Cliente</label><input class="input-field" id="pClient3Name" type="text" placeholder="Ex: Carlos" value="Cliente 3" onchange="pSaveClient3Name()"></div>
+              <div class="prod-form-grid">
+                <div class="field-group"><label class="field-label">Produto / Modelo</label><input class="input-field" id="c3Nome" type="text" placeholder="Ex: Brasil Azul Copa26"></div>
+                <div class="field-group"><label class="field-label">Data</label><input class="input-field" id="c3Data" type="date"></div>
+              </div>
+              <div style="margin-bottom:8px"><label class="field-label">Quantidade por Tamanho</label></div>
+              <div class="sizes-row">
+                <div class="size-field"><div class="size-label-chip">P</div><input class="input-field size-input" id="c3SizeP" type="number" placeholder="0" min="0" oninput="c3UpdatePreview()"></div>
+                <div class="size-field"><div class="size-label-chip">M</div><input class="input-field size-input" id="c3SizeM" type="number" placeholder="0" min="0" oninput="c3UpdatePreview()"></div>
+                <div class="size-field"><div class="size-label-chip">G</div><input class="input-field size-input" id="c3SizeG" type="number" placeholder="0" min="0" oninput="c3UpdatePreview()"></div>
+                <div class="size-field"><div class="size-label-chip">GG</div><input class="input-field size-input" id="c3SizeGG" type="number" placeholder="0" min="0" oninput="c3UpdatePreview()"></div>
+              </div>
+              <div class="preview-row">
+                <div class="preview-total">Total: <strong id="c3PrevTotal">0</strong> peças</div>
+                <div class="preview-valor" id="c3PrevValor">R$ 0,00</div>
+              </div>
+              <button class="btn" onclick="pAddProd('cliente3')" style="width:100%;background:#c2691d">+ Registrar Produção</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title" id="pListTitleCliente3">Cliente 3 — Mai/2026</span>
+              <div style="display:flex;gap:8px;align-items:center">
+                <div class="list-total-badge" id="pListTotalCliente3" style="color:#c2691d;border-color:rgba(194,105,29,0.3);background:rgba(194,105,29,0.08)">R$ 0</div>
+                <button class="btn btn-sm" style="background:#1a73e8" onclick="gerarReciboCliente('cliente3')">📄 Recibo</button>
+                <button class="btn btn-gold btn-sm" onclick="pOpenSync('cliente3')">↗ Gestão</button>
+              </div>
+            </div>
+            <div id="pProdListCliente3"><div class="empty-state">Nenhuma produção registrada</div></div>
+          </div>
+        </div>
       </div>
     </div>
-    <footer-bar>Oficina de Costura © 2026</footer-bar>
+    <footer-bar>Bordados Vieira © 2026</footer-bar>
   </div>
 
 </div><!-- /screenWrap -->
@@ -1467,6 +1531,19 @@ footer-bar{
 // ════════════════════════════════════════════════════
 const MONTHS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const MONTHS_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+// Logo Bordados Vieira (reutilizável em PDFs). size = px
+function tramaLogoSVG(size){
+  const s=size||52;
+  return `<svg width="${s}" height="${s}" viewBox="-58 -58 116 116" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle">
+    <rect x="-50" y="-50" width="100" height="100" fill="none" stroke="#2a9d8f" stroke-width="7"/>
+    <rect x="-50" y="-30" width="100" height="14" fill="#2a9d8f"/>
+    <rect x="-50" y="-7" width="100" height="14" fill="#46b8aa"/>
+    <rect x="-50" y="16" width="100" height="14" fill="#2a9d8f"/>
+    <rect x="-30" y="-50" width="14" height="100" fill="#e9c46a"/>
+    <rect x="-7" y="-50" width="14" height="100" fill="#f4d58a"/>
+    <rect x="16" y="-50" width="14" height="100" fill="#e9c46a"/>
+  </svg>`;
+}
 
 function showToast(msg){
   let t=document.getElementById('_toast');
@@ -1498,20 +1575,17 @@ function switchScreen(id){
   document.getElementById('nav-'+id).classList.add('active');
   document.getElementById('screenWrap').scrollTop=0;
   if(id==='gestao'){
-    document.getElementById('headerIcon').textContent='🧵';
-    document.getElementById('headerName').textContent='Oficina de Costura';
+    document.getElementById('headerName').textContent='Bordados Vieira';
     document.getElementById('headerSub').textContent='Gestão Financeira';
     document.getElementById('monthLabel').textContent=`${MONTHS[gCurrentMonth]} / ${gCurrentYear}`;
   } else if(id==='planejamento'){
-    document.getElementById('headerIcon').textContent='🚀';
     document.getElementById('headerName').textContent='Planejamento';
     document.getElementById('headerSub').textContent='Estratégia & Crescimento';
-    document.getElementById('monthLabel').textContent='JIL Bordados';
+    document.getElementById('monthLabel').textContent='VIEIRA';
     setTimeout(planRenderTudo,80);
   } else {
-    document.getElementById('headerIcon').textContent='📋';
     document.getElementById('headerName').textContent='Produção Diária';
-    document.getElementById('headerSub').textContent='Oficina de Costura';
+    document.getElementById('headerSub').textContent='Bordados Vieira';
     document.getElementById('monthLabel').textContent=`${MONTHS[pCurrentMonth]} / ${pCurrentYear}`;
   }
 }
@@ -1999,7 +2073,13 @@ function hGerarPDFPara(empIdx){
   <button class="btn-close" onclick="hFecharPDF()">← Voltar</button>
   <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
   <div style="margin-top:60px"></div>
-  <div class="empresa">JIL BORDADOS</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:4px">
+    ${tramaLogoSVG(46)}
+    <div style="text-align:left">
+      <div style="font-size:20px;font-weight:900;letter-spacing:1px;color:#13212b">BORDADOS <span style="color:#2a9d8f">VIEIRA</span></div>
+      <div style="font-size:9px;color:#666;letter-spacing:1px">FRANCO DA ROCHA — SP</div>
+    </div>
+  </div>
   <div class="finalidade">FINALIDADE: PAGAMENTO</div>
   <div class="info-grid">
     <div class="info-box"><div class="info-label">Data Início</div><div class="info-val">${ini}</div></div>
@@ -2026,7 +2106,7 @@ function hGerarPDFPara(empIdx){
   <div class="liquido"><div class="liq-label">Valor Líquido</div><div class="liq-val">R$ ${liquido.toFixed(2).replace('.',',')}</div></div>
   <div class="local">FRANCO DA ROCHA, ______/______/______</div>
   <div class="assinaturas">
-    <div class="ass-box"><div class="ass-line">JIL BORDADOS</div></div>
+    <div class="ass-box"><div class="ass-line">BORDADOS VIEIRA</div></div>
     <div class="ass-box"><div class="ass-line">ASSINATURA DO FUNCIONÁRIO</div></div>
   </div>
   <div class="funcionario-info">
@@ -2041,11 +2121,10 @@ function hGerarPDFPara(empIdx){
   if(!viewer){
     viewer=document.createElement('div');
     viewer.id='hPDFViewer';
-    viewer.style.cssText='position:fixed;inset:0;background:#fff;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
     document.body.appendChild(viewer);
   }
+  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
   viewer.innerHTML=html;
-  viewer.style.display='block';
   // Execute scripts inside the injected content
   window.hFecharPDF=function(){viewer.style.display='none';viewer.innerHTML='';};
   showToast('✓ Holerite gerado! Toque em "Imprimir / Salvar PDF"');
@@ -2348,8 +2427,15 @@ let pCurrentMonth=new Date().getMonth();
 let pCurrentYear=new Date().getFullYear();
 let pEditingIdx=-1;
 let pEditingClient='fabio';
-let pState={fabio:{},wellington:{}};
+let pState={fabio:{},wellington:{},cliente3:{}};
+let pClient3Name='Cliente 3';
 const P_LS='oficina_producao_v2';
+const CLIENT_CFG={
+  fabio:{label:'Fábio',color:'#7b3fa0',prefix:'pSize',nomeId:'pNome',dataId:'pData',valorId:'pValorUnit'},
+  wellington:{label:'Wellington',color:'#1a6b8a',prefix:'wSize',nomeId:'wNome',dataId:'wData',valorId:'wValorUnit'},
+  cliente3:{label:'Cliente 3',color:'#c2691d',prefix:'c3Size',nomeId:'c3Nome',dataId:'c3Data',valorId:'c3ValorUnit'}
+};
+function clientLabel(c){return c==='cliente3'?pClient3Name:CLIENT_CFG[c].label;}
 
 function pGetList(client,m,y){
   const k=monthKey(m,y);
@@ -2357,28 +2443,37 @@ function pGetList(client,m,y){
   if(!pState[client][k])pState[client][k]=[];
   return pState[client][k];
 }
-function pGetValorUnit(client){return parseFloat(document.getElementById(client==='fabio'?'pValorUnit':'wValorUnit').value)||2;}
+function pGetValorUnit(client){return parseFloat(document.getElementById(CLIENT_CFG[client].valorId).value)||2;}
+
+function pSaveClient3Name(){
+  const v=document.getElementById('pClient3Name').value.trim()||'Cliente 3';
+  pClient3Name=v;
+  document.getElementById('pTabName3').textContent=v;
+  document.getElementById('pName3Title').textContent=v;
+  pSaveData();pRender();
+}
 
 function pGetSizes(pre){return{P:parseInt(document.getElementById(pre+'P').value)||0,M:parseInt(document.getElementById(pre+'M').value)||0,G:parseInt(document.getElementById(pre+'G').value)||0,GG:parseInt(document.getElementById(pre+'GG').value)||0};}
 
 function pUpdatePreview(){const s=pGetSizes('pSize');const t=s.P+s.M+s.G+s.GG;document.getElementById('pPrevTotal').textContent=t;document.getElementById('pPrevValor').textContent=fmt2(t*pGetValorUnit('fabio'));}
 function wUpdatePreview(){const s=pGetSizes('wSize');const t=s.P+s.M+s.G+s.GG;document.getElementById('wPrevTotal').textContent=t;document.getElementById('wPrevValor').textContent=fmt2(t*pGetValorUnit('wellington'));}
+function c3UpdatePreview(){const s=pGetSizes('c3Size');const t=s.P+s.M+s.G+s.GG;document.getElementById('c3PrevTotal').textContent=t;document.getElementById('c3PrevValor').textContent=fmt2(t*pGetValorUnit('cliente3'));}
 function pUpdateEditPreview(){const s=pGetSizes('pEdit');const t=s.P+s.M+s.G+s.GG;document.getElementById('pEditPrevTotal').textContent=t;document.getElementById('pEditPrevValor').textContent=fmt2(t*(pGetValorUnit(pEditingClient)));}
 
 function pAddProd(client){
-  const isF=client==='fabio';
-  const nome=document.getElementById(isF?'pNome':'wNome').value.trim();
-  const data=document.getElementById(isF?'pData':'wData').value;
-  const s=pGetSizes(isF?'pSize':'wSize');
+  const cfg=CLIENT_CFG[client];
+  const nome=document.getElementById(cfg.nomeId).value.trim();
+  const data=document.getElementById(cfg.dataId).value;
+  const s=pGetSizes(cfg.prefix);
   const total=s.P+s.M+s.G+s.GG;
   if(!nome||!data||total===0){showToast('Preencha produto, data e tamanhos');return;}
   const valorUnit=pGetValorUnit(client);
   const list=pGetList(client,pCurrentMonth,pCurrentYear);
   list.push({nome,data,P:s.P,M:s.M,G:s.G,GG:s.GG,total,valor:total*valorUnit,valorUnit,client});
   list.sort((a,b)=>a.data>b.data?1:-1);
-  document.getElementById(isF?'pNome':'wNome').value='';
-  ['P','M','G','GG'].forEach(sz=>document.getElementById((isF?'pSize':'wSize')+sz).value='');
-  if(isF)pUpdatePreview();else wUpdatePreview();
+  document.getElementById(cfg.nomeId).value='';
+  ['P','M','G','GG'].forEach(sz=>document.getElementById(cfg.prefix+sz).value='');
+  if(client==='fabio')pUpdatePreview();else if(client==='wellington')wUpdatePreview();else c3UpdatePreview();
   pSaveData();pRender();
 }
 
@@ -2412,7 +2507,7 @@ function pSaveEdit(){
 function pOpenSync(client){
   const list=pGetList(client,pCurrentMonth,pCurrentYear);
   const total=list.reduce((s,e)=>s+e.valor,0);
-  const name=client==='fabio'?'Fábio':'Wellington';
+  const name=clientLabel(client);
   document.getElementById('pSyncValue').textContent=fmt0(total);
   document.getElementById('pSyncMonth').textContent=`${name} — ${MONTHS_FULL[pCurrentMonth]} / ${pCurrentYear}`;
   document.getElementById('pSyncModal').classList.add('open');
@@ -2434,17 +2529,25 @@ function pSwitchTab(id,btn){
 
 function pRenderList(client){
   const list=pGetList(client,pCurrentMonth,pCurrentYear);
-  const isF=client==='fabio';
-  const color=isF?'#7b3fa0':'#1a6b8a';
+  const cfg=CLIENT_CFG[client];
+  const color=cfg.color;
+  const label=clientLabel(client);
   const totalFat=list.reduce((s,e)=>s+e.valor,0);
   const totalPcs=list.reduce((s,e)=>s+e.total,0);
+  const cap=client==='fabio'?'Fabio':client==='wellington'?'Wellington':'Cliente3';
 
-  document.getElementById(isF?'pListTitleFabio':'pListTitleWellington').textContent=`${isF?'Fábio':'Wellington'} — ${MONTHS[pCurrentMonth]}/${pCurrentYear}`;
-  document.getElementById(isF?'pListTotalFabio':'pListTotalWellington').textContent=fmt2(totalFat);
-  document.getElementById(isF?'pCardFabio':'pCardWellington').textContent=fmt0(totalFat);
-  document.getElementById(isF?'pCardFabioSub':'pCardWellingtonSub').textContent=totalPcs+' peças';
+  const titleEl=document.getElementById('pListTitle'+cap);
+  if(titleEl)titleEl.textContent=`${label} — ${MONTHS[pCurrentMonth]}/${pCurrentYear}`;
+  const totEl=document.getElementById('pListTotal'+cap);
+  if(totEl)totEl.textContent=fmt2(totalFat);
+  const cardEl=document.getElementById('pCard'+cap);
+  if(cardEl)cardEl.textContent=fmt0(totalFat);
+  const cardSubEl=document.getElementById('pCard'+cap+'Sub');
+  if(cardSubEl)cardSubEl.textContent=totalPcs+' peças';
+  if(client==='cliente3'){const lblEl=document.getElementById('pCardCliente3Label');if(lblEl)lblEl.textContent=label;}
 
-  const container=document.getElementById(isF?'pProdListFabio':'pProdListWellington');
+  const container=document.getElementById('pProdList'+cap);
+  if(!container)return;
   if(list.length===0){container.innerHTML='<div class="empty-state">Nenhuma produção registrada</div>';return;}
 
   const byDate={};list.forEach((e,i)=>{if(!byDate[e.data])byDate[e.data]=[];byDate[e.data].push({...e,_idx:i});});
@@ -2461,7 +2564,8 @@ function pRenderList(client){
 function pRender(){
   const fList=pGetList('fabio',pCurrentMonth,pCurrentYear);
   const wList=pGetList('wellington',pCurrentMonth,pCurrentYear);
-  const allList=[...fList,...wList];
+  const c3List=pGetList('cliente3',pCurrentMonth,pCurrentYear);
+  const allList=[...fList,...wList,...c3List];
   const totalPecas=allList.reduce((s,e)=>s+e.total,0);
   const totalFat=allList.reduce((s,e)=>s+e.valor,0);
   const today=nowDate();
@@ -2474,13 +2578,14 @@ function pRender(){
 
   pRenderList('fabio');
   pRenderList('wellington');
+  pRenderList('cliente3');
 
   if(activeScreen==='producao')document.getElementById('monthLabel').textContent=`${MONTHS[pCurrentMonth]} / ${pCurrentYear}`;
 }
 
 function pBuildMonthNav(){const nav=document.getElementById('prodMonthsNav');nav.innerHTML='';for(let i=0;i<12;i++){const btn=document.createElement('button');btn.className='month-btn'+(i===pCurrentMonth?' active':'');btn.textContent=MONTHS[i];btn.onclick=()=>{pCurrentMonth=i;pBuildMonthNav();pRender();};nav.appendChild(btn);}}
 
-function pSaveData(){try{localStorage.setItem(P_LS,JSON.stringify(pState));autoBackup();}catch(e){}}
+function pSaveData(){try{localStorage.setItem(P_LS,JSON.stringify(pState));localStorage.setItem('oficina_cliente3_nome',pClient3Name);autoBackup();}catch(e){}}
 function pLoadData(){
   try{
     const r=localStorage.getItem(P_LS);
@@ -2490,7 +2595,16 @@ function pLoadData(){
       if(d.fabio||d.wellington){pState=d;}
       else{pState={fabio:d,wellington:{}};}// migrate old data to Fábio
     }
+    if(!pState.cliente3)pState.cliente3={};
+    const nm=localStorage.getItem('oficina_cliente3_nome');
+    if(nm)pClient3Name=nm;
   }catch(e){}
+  // Aplica nome do cliente 3 na UI
+  setTimeout(()=>{
+    const inp=document.getElementById('pClient3Name');if(inp)inp.value=pClient3Name;
+    const tab=document.getElementById('pTabName3');if(tab)tab.textContent=pClient3Name;
+    const ttl=document.getElementById('pName3Title');if(ttl)ttl.textContent=pClient3Name;
+  },50);
 }
 function exportProd(){const b=new Blob([JSON.stringify(pState,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`producao-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();showToast('✓ Backup salvo!');}
 function importProd(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.fabio||d.wellington){pState=d;}else{pState={fabio:d,wellington:{}};}pSaveData();pRender();showToast('✓ Dados restaurados!');}catch{showToast('❌ Arquivo inválido');}};r.readAsText(f);ev.target.value='';}
@@ -2498,7 +2612,7 @@ function importProd(ev){const f=ev.target.files[0];if(!f)return;const r=new File
 // ════════════════════════════════════════════════════
 // PWA MANIFEST (inline)
 // ════════════════════════════════════════════════════
-const manifest={name:'Oficina de Costura',short_name:'Oficina',start_url:'.',display:'standalone',background_color:'#f8f9fa',theme_color:'#1a73e8',orientation:'portrait',icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231a73e8'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E🧵%3C/text%3E%3C/svg%3E",sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
+const manifest={name:'Bordados Vieira',short_name:'Vieira',start_url:'.',display:'standalone',background_color:'#13212b',theme_color:'#2a9d8f',orientation:'portrait',icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2313212b'/%3E%3Cg transform='translate(256,256) scale(2.1)'%3E%3Crect x='-50' y='-50' width='100' height='100' fill='none' stroke='%232a9d8f' stroke-width='8'/%3E%3Crect x='-50' y='-30' width='100' height='14' fill='%232a9d8f'/%3E%3Crect x='-50' y='-7' width='100' height='14' fill='%2346b8aa'/%3E%3Crect x='-50' y='16' width='100' height='14' fill='%232a9d8f'/%3E%3Crect x='-30' y='-50' width='14' height='100' fill='%23e9c46a'/%3E%3Crect x='-7' y='-50' width='14' height='100' fill='%23f4d58a'/%3E%3Crect x='16' y='-50' width='14' height='100' fill='%23e9c46a'/%3E%3C/g%3E%3C/svg%3E",sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
 const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
 document.getElementById('manifestLink').href=URL.createObjectURL(mBlob);
 
@@ -2537,7 +2651,8 @@ function planGetAnualData(ano){
     const lucro=ms.revenue-custo;
     const fList=pGetList('fabio',m,ano);
     const wList=pGetList('wellington',m,ano);
-    const pecas=fList.reduce((s,e)=>s+e.total,0)+wList.reduce((s,e)=>s+e.total,0);
+    const c3List=pGetList('cliente3',m,ano);
+    const pecas=fList.reduce((s,e)=>s+e.total,0)+wList.reduce((s,e)=>s+e.total,0)+c3List.reduce((s,e)=>s+e.total,0);
     const fFat=fList.reduce((s,e)=>s+e.valor,0);
     const wFat=wList.reduce((s,e)=>s+e.valor,0);
     rows.push({m,revenue:ms.revenue,custo,lucro,pecas,fFat,wFat});
@@ -2959,11 +3074,14 @@ function gerarRelatorioMensal(){
   // ── Produção ──
   const fList=pGetList('fabio',m,y);
   const wList=pGetList('wellington',m,y);
+  const c3List=pGetList('cliente3',m,y);
   const fFat=fList.reduce((s,e)=>s+e.valor,0);
   const wFat=wList.reduce((s,e)=>s+e.valor,0);
+  const c3Fat=c3List.reduce((s,e)=>s+e.valor,0);
   const fPcs=fList.reduce((s,e)=>s+e.total,0);
   const wPcs=wList.reduce((s,e)=>s+e.total,0);
-  const totalPcs=fPcs+wPcs;
+  const c3Pcs=c3List.reduce((s,e)=>s+e.total,0);
+  const totalPcs=fPcs+wPcs+c3Pcs;
 
   // ── Vales e faltas ──
   const vales=gGetVales(m,y);
@@ -3042,7 +3160,7 @@ function gerarRelatorioMensal(){
   }
 
   const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<title>Relatório Mensal — ${mes}/${ano} — JIL Bordados</title>
+<title>Relatório Mensal — ${mes}/${ano} — Bordados Vieira</title>
 <style>
   @media print{@page{size:A4;margin:12mm 14mm;} .no-print{display:none!important;} body{padding:0;}}
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -3107,8 +3225,11 @@ function gerarRelatorioMensal(){
 
 <!-- ══ CAPA ══ -->
 <div class="capa">
-  <div class="capa-empresa">JIL BORDADOS</div>
-  <div class="capa-sub">Franco da Rocha — SP &nbsp;·&nbsp; Oficina de Costura e Bordado Industrial</div>
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
+    <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:6px;display:flex">${tramaLogoSVG(54)}</div>
+    <div class="capa-empresa">BORDADOS VIEIRA</div>
+  </div>
+  <div class="capa-sub">Franco da Rocha — SP &nbsp;·&nbsp; Bordado Industrial e Costura</div>
   <div class="capa-titulo">RELATÓRIO GERENCIAL MENSAL</div>
   <div style="font-size:12px;font-weight:700;margin-bottom:4px">${mes.toUpperCase()} / ${ano}</div>
   <div style="font-size:9px;opacity:0.75">Gerado em ${dataGer} &nbsp;·&nbsp; Período: 01/${mesNum}/${ano} a ${diasMes}/${mesNum}/${ano}</div>
@@ -3205,7 +3326,7 @@ ${(ms.overtime||[]).length>0?`
 <!-- ══ 4. PRODUÇÃO ══ -->
 <div class="secao">
   <div class="secao-titulo">${(ms.overtime||[]).length>0?'4':'3'}. Produção do Mês</div>
-  <div class="prod-row">
+  <div class="prod-row" style="grid-template-columns:1fr 1fr 1fr">
     <div class="prod-card" style="border-left:4px solid #7b3fa0">
       <div class="prod-card-nome">👤 FÁBIO</div>
       <div class="prod-card-val" style="color:#7b3fa0">${R0(fFat)}</div>
@@ -3216,13 +3337,18 @@ ${(ms.overtime||[]).length>0?`
       <div class="prod-card-val" style="color:#1a6b8a">${R0(wFat)}</div>
       <div style="font-size:9px;color:#666">${wPcs.toLocaleString('pt-BR')} peças &nbsp;·&nbsp; ${wList.length} lotes</div>
     </div>
+    ${c3List.length>0?`<div class="prod-card" style="border-left:4px solid #c2691d">
+      <div class="prod-card-nome">👤 ${pClient3Name.toUpperCase()}</div>
+      <div class="prod-card-val" style="color:#c2691d">${R0(c3Fat)}</div>
+      <div style="font-size:9px;color:#666">${c3Pcs.toLocaleString('pt-BR')} peças &nbsp;·&nbsp; ${c3List.length} lotes</div>
+    </div>`:''}
   </div>
   ${totalPcs>0?`<table>
     <thead><tr><th>Cliente</th><th>Produto</th><th>Data</th><th class="num">P</th><th class="num">M</th><th class="num">G</th><th class="num">GG</th><th class="num">Total</th><th class="num">Valor</th></tr></thead>
     <tbody>
-      ${[...fList.map(e=>({...e,_cli:'Fábio'})),...wList.map(e=>({...e,_cli:'Wellington'}))].sort((a,b)=>a.data>b.data?1:-1).map(e=>`<tr><td style="color:${e._cli==='Fábio'?'#7b3fa0':'#1a6b8a'};font-weight:600">${e._cli}</td><td>${e.nome}</td><td>${e.data.split('-').reverse().join('/')}</td><td class="num">${e.P||0}</td><td class="num">${e.M||0}</td><td class="num">${e.G||0}</td><td class="num">${e.GG||0}</td><td class="num" style="font-weight:700">${e.total}</td><td class="num" style="color:#1a7a3c">${R(e.valor)}</td></tr>`).join('')}
+      ${[...fList.map(e=>({...e,_cli:'Fábio',_cor:'#7b3fa0'})),...wList.map(e=>({...e,_cli:'Wellington',_cor:'#1a6b8a'})),...c3List.map(e=>({...e,_cli:pClient3Name,_cor:'#c2691d'}))].sort((a,b)=>a.data>b.data?1:-1).map(e=>`<tr><td style="color:${e._cor};font-weight:600">${e._cli}</td><td>${e.nome}</td><td>${e.data.split('-').reverse().join('/')}</td><td class="num">${e.P||0}</td><td class="num">${e.M||0}</td><td class="num">${e.G||0}</td><td class="num">${e.GG||0}</td><td class="num" style="font-weight:700">${e.total}</td><td class="num" style="color:#1a7a3c">${R(e.valor)}</td></tr>`).join('')}
     </tbody>
-    <tfoot><tr><td colspan="7"><strong>TOTAL</strong></td><td class="num">${totalPcs.toLocaleString('pt-BR')}</td><td class="num">${R(fFat+wFat)}</td></tr></tfoot>
+    <tfoot><tr><td colspan="7"><strong>TOTAL</strong></td><td class="num">${totalPcs.toLocaleString('pt-BR')}</td><td class="num">${R(fFat+wFat+c3Fat)}</td></tr></tfoot>
   </table>`:'<div style="padding:14px;text-align:center;color:#888;font-style:italic">Nenhuma produção registrada neste mês</div>'}
 </div>
 
@@ -3279,13 +3405,13 @@ ${(ms.overtime||[]).length>0?`
     Franco da Rocha, _______ de ______________ de ${ano}
   </div>
   <div class="assinatura">
-    <div><div class="ass-linha">JILMAR VIANA DOS SANTOS<br>Responsável — JIL Bordados</div></div>
+    <div><div class="ass-linha">JILMAR VIANA DOS SANTOS<br>Responsável — Bordados Vieira</div></div>
     <div><div class="ass-linha">CONTADOR / RESPONSÁVEL FINANCEIRO</div></div>
   </div>
 </div>
 
 <div class="rodape">
-  JIL Bordados · Franco da Rocha — SP &nbsp;·&nbsp; Relatório gerado em ${dataGer} pelo sistema Oficina de Costura
+  Bordados Vieira · Franco da Rocha — SP &nbsp;·&nbsp; Relatório gerado em ${dataGer} pelo sistema Bordados Vieira
 </div>
 
 </body></html>`;
@@ -3295,12 +3421,153 @@ ${(ms.overtime||[]).length>0?`
   if(!viewer){
     viewer=document.createElement('div');
     viewer.id='relPDFViewer';
-    viewer.style.cssText='position:fixed;inset:0;background:#fff;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
     document.body.appendChild(viewer);
   }
+  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
   viewer.innerHTML=html;
-  viewer.style.display='block';
   showToast('✓ Relatório gerado! Toque em Imprimir / Salvar PDF');
+}
+
+// ════════════════════════════════════════════════════
+// RECIBO / PEDIDO PDF PARA CLIENTE
+// ════════════════════════════════════════════════════
+function gerarReciboCliente(client){
+  const list=pGetList(client,pCurrentMonth,pCurrentYear);
+  if(list.length===0){showToast('Nenhuma produção registrada para gerar recibo');return;}
+  const label=clientLabel(client);
+  const cor=CLIENT_CFG[client].color;
+  const mes=MONTHS_FULL[pCurrentMonth];
+  const ano=pCurrentYear;
+  const dataGer=new Date().toLocaleDateString('pt-BR');
+  const totalPcs=list.reduce((s,e)=>s+e.total,0);
+  const totalVal=list.reduce((s,e)=>s+e.valor,0);
+
+  // Linhas ordenadas por data
+  const rows=[...list].sort((a,b)=>a.data>b.data?1:-1).map((e,i)=>{
+    const sizes=[e.P?`P:${e.P}`:'',e.M?`M:${e.M}`:'',e.G?`G:${e.G}`:'',e.GG?`GG:${e.GG}`:''].filter(Boolean).join(' · ');
+    return `<tr>
+      <td style="text-align:center">${i+1}</td>
+      <td>${e.data.split('-').reverse().join('/')}</td>
+      <td><strong>${e.nome}</strong></td>
+      <td style="font-size:9px;color:#555">${sizes}</td>
+      <td class="num">${e.total}</td>
+      <td class="num">R$ ${(e.valorUnit||2).toFixed(2).replace('.',',')}</td>
+      <td class="num" style="font-weight:700;color:#1a7a3c">R$ ${e.valor.toFixed(2).replace('.',',')}</td>
+    </tr>`;
+  }).join('');
+
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>Recibo ${label} — ${mes}/${ano}</title>
+<style>
+  @media print{@page{size:A4;margin:14mm;} .no-print{display:none!important;}}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#111;background:#fff;padding:20px;}
+  .btn-bar{position:fixed;top:10px;right:10px;display:flex;gap:8px;z-index:100;}
+  .btn-bar button{border:none;border-radius:20px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.18);font-family:Arial;}
+  .btn-print{background:#1a73e8;color:#fff;}
+  .btn-close{background:#fff;color:#333;border:1px solid #ddd;}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ${cor};padding-bottom:14px;margin-bottom:16px;}
+  .empresa{font-size:22px;font-weight:900;color:${cor};letter-spacing:1px;}
+  .empresa-sub{font-size:10px;color:#666;margin-top:2px;}
+  .doc-tipo{text-align:right;}
+  .doc-tipo-t{font-size:16px;font-weight:800;color:#333;}
+  .doc-tipo-s{font-size:10px;color:#888;margin-top:2px;}
+  .info-cliente{background:#f7f7f7;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .ic-item{font-size:11px;}
+  .ic-label{font-size:8.5px;color:#888;text-transform:uppercase;letter-spacing:0.5px;}
+  .ic-val{font-weight:700;font-size:13px;margin-top:1px;}
+  table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:10px;}
+  th{background:${cor};color:#fff;padding:8px 8px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:0.4px;}
+  td{padding:7px 8px;border-bottom:1px solid #e8e8e8;}
+  tr:nth-child(even) td{background:#faf9fc;}
+  td.num{text-align:right;font-family:'Courier New',monospace;}
+  tfoot td{background:#f0f0f0!important;font-weight:900;border-top:2px solid ${cor};font-size:11px;}
+  .total-box{background:linear-gradient(135deg,${cor},${cor}dd);color:#fff;border-radius:10px;padding:16px 20px;text-align:center;margin-bottom:18px;}
+  .total-label{font-size:11px;opacity:0.85;text-transform:uppercase;letter-spacing:1px;}
+  .total-val{font-size:30px;font-weight:900;margin-top:4px;}
+  .total-pcs{font-size:11px;opacity:0.9;margin-top:4px;}
+  .obs{font-size:9px;color:#777;border:1px dashed #ccc;border-radius:8px;padding:10px 14px;margin-bottom:20px;}
+  .assinatura{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;}
+  .ass-linha{border-top:1px solid #000;padding-top:5px;font-size:10px;font-weight:700;text-align:center;}
+  .rodape{text-align:center;font-size:8.5px;color:#999;margin-top:24px;padding-top:10px;border-top:1px solid #eee;}
+</style></head><body>
+
+<div class="btn-bar no-print">
+  <button class="btn-close" onclick="document.getElementById('reciboViewer').style.display='none'">← Voltar</button>
+  <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+</div>
+
+<div class="header">
+  <div style="display:flex;align-items:center;gap:12px">
+    ${tramaLogoSVG(48)}
+    <div>
+      <div class="empresa">BORDADOS VIEIRA</div>
+      <div class="empresa-sub">Franco da Rocha — SP · Bordado Industrial</div>
+    </div>
+  </div>
+  <div class="doc-tipo">
+    <div class="doc-tipo-t">RECIBO DE PEDIDO</div>
+    <div class="doc-tipo-s">Nº ${ano}${String(pCurrentMonth+1).padStart(2,'0')}-${client.slice(0,3).toUpperCase()}</div>
+  </div>
+</div>
+
+<div class="info-cliente">
+  <div class="ic-item"><div class="ic-label">Cliente</div><div class="ic-val">${label}</div></div>
+  <div class="ic-item"><div class="ic-label">Período</div><div class="ic-val">${mes} / ${ano}</div></div>
+  <div class="ic-item"><div class="ic-label">Itens</div><div class="ic-val">${list.length} lote${list.length>1?'s':''}</div></div>
+  <div class="ic-item"><div class="ic-label">Emissão</div><div class="ic-val">${dataGer}</div></div>
+</div>
+
+<table>
+  <thead><tr>
+    <th style="width:5%">#</th>
+    <th style="width:13%">Data</th>
+    <th style="width:28%">Modelo / Produto</th>
+    <th style="width:22%">Tamanhos</th>
+    <th class="num" style="width:10%">Qtd</th>
+    <th class="num" style="width:10%">Unit.</th>
+    <th class="num" style="width:12%">Total</th>
+  </tr></thead>
+  <tbody>${rows}</tbody>
+  <tfoot><tr>
+    <td colspan="4"><strong>TOTAL GERAL</strong></td>
+    <td class="num">${totalPcs}</td>
+    <td class="num">—</td>
+    <td class="num" style="color:#1a7a3c">R$ ${totalVal.toFixed(2).replace('.',',')}</td>
+  </tr></tfoot>
+</table>
+
+<div class="total-box">
+  <div class="total-label">Valor Total a Pagar</div>
+  <div class="total-val">R$ ${totalVal.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+  <div class="total-pcs">${totalPcs.toLocaleString('pt-BR')} peças bordadas · ${list.length} lote${list.length>1?'s':''}</div>
+</div>
+
+<div class="obs">
+  <strong>Observações:</strong> Valores referentes ao serviço de bordado das peças listadas acima, no período de ${mes}/${ano}.
+  Documento gerado eletronicamente pelo sistema de gestão da Bordados Vieira.
+</div>
+
+<div class="assinatura">
+  <div><div class="ass-linha">BORDADOS VIEIRA<br>Prestador de Serviço</div></div>
+  <div><div class="ass-linha">${label.toUpperCase()}<br>Cliente / Recebedor</div></div>
+</div>
+
+<div class="rodape">
+  Bordados Vieira · Franco da Rocha — SP · Recibo emitido em ${dataGer}
+</div>
+
+</body></html>`;
+
+  let viewer=document.getElementById('reciboViewer');
+  if(!viewer){
+    viewer=document.createElement('div');
+    viewer.id='reciboViewer';
+    document.body.appendChild(viewer);
+  }
+  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  viewer.innerHTML=html;
+  showToast('✓ Recibo gerado! Toque em Imprimir / Salvar PDF');
 }
 
 // ════════════════════════════════════════════════════
