@@ -1546,6 +1546,22 @@ function tramaLogoSVG(size){
   </svg>`;
 }
 
+// ── Tela de PDF: esconde o app inteiro enquanto o documento está aberto ──
+// (evita o app aparecer piscando por baixo e o PDF sair com o app junto)
+(function(){const st=document.createElement('style');st.textContent='body.pdf-aberto>*:not(.pdf-viewer){display:none!important}body.pdf-aberto{background:#fff!important;overflow:auto!important}body.pdf-aberto>.pdf-viewer{position:static!important;background:#fff}';document.head.appendChild(st);})();
+let _pdfScrollY=0;
+function pdfMostrar(viewer){
+  document.querySelectorAll('.pdf-viewer').forEach(v=>{if(v!==viewer){v.style.display='none';v.innerHTML='';}});
+  if(!document.body.classList.contains('pdf-aberto'))_pdfScrollY=window.scrollY;
+  viewer.classList.add('pdf-viewer');viewer.style.cssText='display:block;background:#fff;';
+  document.body.classList.add('pdf-aberto');window.scrollTo(0,0);
+}
+function pdfFechar(){
+  document.querySelectorAll('.pdf-viewer').forEach(v=>{v.style.display='none';v.innerHTML='';});
+  document.body.classList.remove('pdf-aberto');window.scrollTo(0,_pdfScrollY);
+}
+window.hFecharPDF=pdfFechar;
+
 function showToast(msg){
   let t=document.getElementById('_toast');
   if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-family:Inter,sans-serif;font-weight:600;font-size:0.72rem;padding:8px 18px;border-radius:8px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(139,69,19,0.3);';document.body.appendChild(t);}
@@ -1940,9 +1956,9 @@ function feriasRecibo(i){
   </div>`;
   let viewer=document.getElementById('hPDFViewer');
   if(!viewer){viewer=document.createElement('div');viewer.id='hPDFViewer';document.body.appendChild(viewer);}
-  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  pdfMostrar(viewer);
   viewer.innerHTML=html;
-  window.hFecharPDF=function(){viewer.style.display='none';viewer.innerHTML='';};
+  window.hFecharPDF=pdfFechar;
   showToast('✓ Recibo gerado! Toque em "Imprimir / Salvar PDF"');
 }
 
@@ -2208,10 +2224,10 @@ function hGerarPDFPara(empIdx){
     viewer.id='hPDFViewer';
     document.body.appendChild(viewer);
   }
-  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  pdfMostrar(viewer);
   viewer.innerHTML=html;
   // Execute scripts inside the injected content
-  window.hFecharPDF=function(){viewer.style.display='none';viewer.innerHTML='';};
+  window.hFecharPDF=pdfFechar;
   showToast('✓ Holerite gerado! Toque em "Imprimir / Salvar PDF"');
 }
 
@@ -3303,7 +3319,7 @@ function gerarRelatorioMensal(){
 </style></head><body>
 
 <div class="btn-bar no-print">
-  <button class="btn-close" onclick="document.getElementById('relPDFViewer').style.display='none'">← Voltar</button>
+  <button class="btn-close" onclick="pdfFechar()">← Voltar</button>
   <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
 </div>
 
@@ -3507,7 +3523,7 @@ ${(ms.overtime||[]).length>0?`
     viewer.id='relPDFViewer';
     document.body.appendChild(viewer);
   }
-  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  pdfMostrar(viewer);
   viewer.innerHTML=html;
   showToast('✓ Relatório gerado! Toque em Imprimir / Salvar PDF');
 }
@@ -3577,7 +3593,7 @@ function gerarReciboCliente(client){
 </style></head><body>
 
 <div class="btn-bar no-print">
-  <button class="btn-close" onclick="document.getElementById('reciboViewer').style.display='none'">← Voltar</button>
+  <button class="btn-close" onclick="pdfFechar()">← Voltar</button>
   <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
 </div>
 
@@ -3649,7 +3665,7 @@ function gerarReciboCliente(client){
     viewer.id='reciboViewer';
     document.body.appendChild(viewer);
   }
-  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  pdfMostrar(viewer);
   viewer.innerHTML=html;
   showToast('✓ Recibo gerado! Toque em Imprimir / Salvar PDF');
 }
