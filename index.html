@@ -1843,9 +1843,20 @@ function feriasPreview(){
   if(isNaN(empIdx)||!gEmployees[empIdx]){el.textContent='';return;}
   const emp=gEmployees[empIdx];
   const saldo=feriasSaldo(empIdx);
-  const valorFer=gCalcFer(emp.salary);
-  el.innerHTML=`${emp.name} · ${dias} dias de férias · Valor proporcional: <strong style="color:var(--purple)">${fmt2(valorFer*(dias/30))}</strong> &nbsp;|&nbsp; Saldo atual: <strong style="color:${saldo>=dias?'var(--green)':'var(--red)'}">${saldo} dias</strong>`;
+  el.innerHTML=`${emp.name} · ${dias} dias de férias · A pagar (com ⅓): <strong style="color:var(--purple)">${fmt2(feriasValor(emp,dias).total)}</strong> &nbsp;|&nbsp; Saldo atual: <strong style="color:${saldo>=dias?'var(--green)':'var(--red)'}">${saldo} dias</strong>`;
 }
+
+// Dias de férias que caem dentro de um mês (para descontar do salário do mês)
+function feriasDiasNoMes(empIdx,m,y){
+  let tot=0;
+  gGetFerias().filter(f=>f.empIdx===empIdx).forEach(f=>{
+    const [d,mm,yy]=(f.inicio||'').split('/').map(Number);if(!yy)return;
+    for(let i=0;i<f.dias;i++){const dt=new Date(yy,mm-1,d+i);if(dt.getMonth()===m&&dt.getFullYear()===y)tot++;}
+  });
+  return Math.min(tot,30);
+}
+// Valor real das férias: salário ÷ 30 × dias + ⅓ constitucional
+function feriasValor(emp,dias){const base=emp.salary/30*dias;return{base,terco:base/3,total:base*4/3};}
 
 function feriasSaldo(empIdx){
   // Direito: 30 dias para cada funcionária cadastrada
@@ -1861,7 +1872,7 @@ function feriasRegistrar(){
   const saldo=feriasSaldo(empIdx);
   if(dias>saldo){showToast(`❌ Saldo insuficiente: apenas ${saldo} dia(s) disponível`);return;}
   const emp=gEmployees[empIdx];
-  const valor=gCalcFer(emp.salary)*(dias/30);
+  const valor=feriasValor(emp,dias).total;
   // Calcular data fim
   const dt=new Date(inicio+'T00:00:00');dt.setDate(dt.getDate()+dias-1);
   const fim=`${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
@@ -1871,6 +1882,68 @@ function feriasRegistrar(){
   document.getElementById('feriasDias').value='30';
   document.getElementById('feriasPreviewBox').textContent='';
   gSaveData();gRender();showToast(`✓ Férias de ${emp.name} registradas!`);
+}
+
+function feriasRecibo(i){
+  const f=gGetFerias()[i];if(!f)return;
+  const emp=gEmployees[f.empIdx];if(!emp){showToast('Funcionária não encontrada');return;}
+  const v=feriasValor(emp,f.dias);
+  const R=n=>n.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  const html=`<style>
+    #hPDFViewer .rf{font-family:Arial,sans-serif;font-size:11px;color:#000;padding:20px;max-width:800px;margin:0 auto;}
+    #hPDFViewer .rf *{box-sizing:border-box;}
+    #hPDFViewer .rf .tit{text-align:center;font-size:14px;font-weight:bold;margin:10px 0 12px;letter-spacing:1px;}
+    #hPDFViewer .rf .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:10px;}
+    #hPDFViewer .rf .box{border:1px solid #000;padding:6px 8px;}
+    #hPDFViewer .rf .lb{font-size:9px;color:#555;text-transform:uppercase;}
+    #hPDFViewer .rf .vl{font-size:11px;font-weight:bold;margin-top:2px;}
+    #hPDFViewer .rf table{width:100%;border-collapse:collapse;margin-bottom:10px;}
+    #hPDFViewer .rf th,#hPDFViewer .rf td{border:1px solid #000;padding:6px 8px;font-size:11px;}
+    #hPDFViewer .rf th{background:#f0f0f0;}
+    #hPDFViewer .rf td.n{text-align:right;font-weight:bold;color:#0a7d2f;}
+    #hPDFViewer .rf .liq{border:2px solid #000;padding:10px;text-align:center;margin-bottom:14px;background:#f9f9f9;}
+    #hPDFViewer .rf .texto{border:1px solid #000;padding:10px;line-height:1.6;margin-bottom:14px;}
+    #hPDFViewer .rf .ass{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:10px;}
+    #hPDFViewer .rf .linha{border-top:1px solid #000;margin-top:40px;padding-top:5px;font-size:10px;font-weight:bold;text-align:center;}
+    #hPDFViewer .bp{position:fixed;top:10px;right:10px;background:#1a73e8;color:#fff;border:none;border-radius:20px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;z-index:1000;}
+    #hPDFViewer .bc{position:fixed;top:10px;left:10px;background:#fff;border:1px solid #ddd;border-radius:20px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;z-index:1000;color:#333;}
+    @media print{@page{size:A4;margin:15mm;}#hPDFViewer .bp,#hPDFViewer .bc{display:none;}}
+  </style>
+  <button class="bc" onclick="hFecharPDF()">← Voltar</button>
+  <button class="bp" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+  <div class="rf"><div style="margin-top:50px"></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+      ${tramaLogoSVG(46)}
+      <div><div style="font-size:20px;font-weight:900;letter-spacing:1px;color:#13212b">BORDADOS <span style="color:#2a9d8f">VIEIRA</span></div>
+      <div style="font-size:9px;color:#666;letter-spacing:1px">FRANCO DA ROCHA — SP</div></div>
+    </div>
+    <div class="tit">RECIBO DE FÉRIAS</div>
+    <div class="grid">
+      <div class="box"><div class="lb">Funcionária</div><div class="vl">${emp.fullName||emp.name}</div></div>
+      <div class="box"><div class="lb">CPF</div><div class="vl">${emp.cpf||'—'}</div></div>
+      <div class="box"><div class="lb">Cargo</div><div class="vl">${emp.role||'—'}</div></div>
+      <div class="box"><div class="lb">Início das férias</div><div class="vl">${f.inicio}</div></div>
+      <div class="box"><div class="lb">Fim das férias</div><div class="vl">${f.fim}</div></div>
+      <div class="box"><div class="lb">Dias</div><div class="vl">${f.dias} dias</div></div>
+    </div>
+    <table>
+      <thead><tr><th style="text-align:left">Descrição</th><th>Referência</th><th style="text-align:right">Valor (R$)</th></tr></thead>
+      <tbody>
+        <tr><td>Férias (salário R$ ${R(emp.salary)} ÷ 30 × ${f.dias} dias)</td><td style="text-align:center">${f.dias} dias</td><td class="n">${R(v.base)}</td></tr>
+        <tr><td>1/3 constitucional de férias</td><td style="text-align:center">⅓</td><td class="n">${R(v.terco)}</td></tr>
+      </tbody>
+    </table>
+    <div class="liq"><div style="font-size:10px;color:#555">TOTAL A RECEBER</div><div style="font-size:18px;font-weight:bold;margin-top:3px">R$ ${R(v.total)}</div></div>
+    <div class="texto">Recebi de <strong>BORDADOS VIEIRA</strong> a importância de <strong>R$ ${R(v.total)}</strong>, referente a <strong>${f.dias} dias de férias</strong> acrescidos do 1/3 constitucional, com gozo de <strong>${f.inicio}</strong> a <strong>${f.fim}</strong>. Os dias de férias são descontados do salário do mês no holerite.</div>
+    <div style="text-align:right">FRANCO DA ROCHA, ______/______/______</div>
+    <div class="ass"><div class="linha">BORDADOS VIEIRA</div><div class="linha">ASSINATURA DA FUNCIONÁRIA</div></div>
+  </div>`;
+  let viewer=document.getElementById('hPDFViewer');
+  if(!viewer){viewer=document.createElement('div');viewer.id='hPDFViewer';document.body.appendChild(viewer);}
+  viewer.style.cssText='position:fixed;inset:0;background:#ffffff;z-index:999999;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:1;visibility:visible;';
+  viewer.innerHTML=html;
+  window.hFecharPDF=function(){viewer.style.display='none';viewer.innerHTML='';};
+  showToast('✓ Recibo gerado! Toque em "Imprimir / Salvar PDF"');
 }
 
 function gRemoveFerias(i){
@@ -1911,7 +1984,8 @@ function gRenderFerias(){
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
-        <span class="ot-log-val" style="color:var(--purple)">${fmt2(f.valor)}</span>
+        <span class="ot-log-val" style="color:var(--purple)">${fmt2(gEmployees[f.empIdx]?feriasValor(gEmployees[f.empIdx],f.dias).total:f.valor)}</span>
+        <button class="btn btn-sm" style="background:var(--purple);padding:4px 10px;font-size:0.68rem" onclick="feriasRecibo(${ri2})">📄 Recibo</button>
         <button class="expense-del" onclick="gRemoveFerias(${ri2})">✕</button>
       </div>
     </li>`;
@@ -1971,7 +2045,8 @@ function hUpdatePreview(){
   const otHrs100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.hours,0);
   const otVal100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.value,0);
   const gasVal=gGasOf(ms,emp);
-  const totalDesc=totalVale+totalFalta;
+  const ferDias=feriasDiasNoMes(empIdx,gCurrentMonth,gCurrentYear);const ferDesc=emp.salary/30*ferDias;
+  const totalDesc=totalVale+totalFalta+ferDesc;
   const liquido=emp.salary+empOT+gasVal-totalDesc;
   const mes=MONTHS_FULL[gCurrentMonth];
   const ano=gCurrentYear;
@@ -1985,6 +2060,7 @@ function hUpdatePreview(){
   if(gasVal>0)rows+=`<tr><td style="padding:5px 0">🚗 Gasolina / Vale Transporte</td><td style="text-align:right;color:var(--green);padding:5px 0">${fmt2(gasVal)}</td><td style="padding:5px 0"></td></tr>`;
   vales.forEach(v=>{rows+=`<tr><td style="padding:5px 0">${v.desc}</td><td style="padding:5px 0"></td><td style="text-align:right;color:var(--red);padding:5px 0">${fmt2(v.amount)}</td></tr>`;});
   if(faltas.length>0)rows+=`<tr><td style="padding:5px 0">Faltas (${faltas.length} dia${faltas.length>1?'s':''})</td><td style="padding:5px 0"></td><td style="text-align:right;color:var(--red);padding:5px 0">${fmt2(totalFalta)}</td></tr>`;
+  if(ferDias>0)rows+=`<tr><td style="padding:5px 0">🏖️ Dias de férias (${ferDias} dia${ferDias>1?'s':''}) · pagos no recibo de férias</td><td style="padding:5px 0"></td><td style="text-align:right;color:var(--red);padding:5px 0">${fmt2(ferDesc)}</td></tr>`;
   document.getElementById('hPreviewBody').innerHTML=rows;
   document.getElementById('hPreviewFoot').innerHTML=`
     <tr style="border-top:1px solid var(--border2)">
@@ -2024,7 +2100,8 @@ function hGerarPDFPara(empIdx){
   const otHrs100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.hours,0);
   const otVal100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.value,0);
   const otHrsTotal=otHrs50+otHrs100;
-  const totalDesc=totalVale+totalFalta;
+  const ferDias=feriasDiasNoMes(empIdx,gCurrentMonth,gCurrentYear);const ferDesc=emp.salary/30*ferDias;
+  const totalDesc=totalVale+totalFalta+ferDesc;
   const gasVal=gGasOf(ms,emp);
   const totalDescFinal=totalDesc;
   const liquido=emp.salary+empOT+gasVal-totalDescFinal;
@@ -2037,6 +2114,7 @@ function hGerarPDFPara(empIdx){
   let valeRows='';
   vales.forEach(v=>{valeRows+=`<tr><td class="desc">${v.desc}</td><td class="ref">—</td><td class="venc"></td><td class="desc_val">${v.amount.toFixed(2).replace('.',',')}</td></tr>`;});
   if(faltas.length>0){valeRows+=`<tr><td class="desc">Faltas (${faltas.length} dia${faltas.length>1?'s':''})</td><td class="ref">${faltas.length}</td><td class="venc"></td><td class="desc_val">${totalFalta.toFixed(2).replace('.',',')}</td></tr>`;}
+  if(ferDias>0){valeRows+=`<tr><td class="desc">Dias de férias (pagos em recibo separado)</td><td class="ref">${ferDias}</td><td class="venc"></td><td class="desc_val">${ferDesc.toFixed(2).replace('.',',')}</td></tr>`;}
 
   let otRow='';
   if(otHrs50>0){otRow+=`<tr><td class="desc">Horas Extras 60%</td><td class="ref">${otHrs50}h</td><td class="venc">${otVal50.toFixed(2).replace('.',',')}</td><td class="desc_val"></td></tr>`;}
