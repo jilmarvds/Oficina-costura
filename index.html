@@ -1425,6 +1425,7 @@ footer-bar{
     <div class="modal-field"><label class="modal-label">Cargo</label><input class="input-field" id="gEditRole" type="text"></div>
     <div class="modal-field"><label class="modal-label">CPF</label><input class="input-field" id="gEditCpf" type="text" placeholder="000.000.000-00"></div>
     <div class="modal-field"><label class="modal-label">Salário (R$)</label><input class="input-field" id="gEditSalary" type="number" min="0" step="100"></div>
+    <div class="modal-field"><label class="modal-label">🚗 Gasolina / Vale transporte (R$/mês)</label><input class="input-field" id="gEditGas" type="number" min="0" step="10" placeholder="0 = não recebe"></div>
     <div class="modal-actions"><button class="btn" onclick="gSaveEdit()">Salvar</button><button class="btn btn-ghost" onclick="closeAllModals()">Cancelar</button></div>
   </div>
 </div>
@@ -1610,18 +1611,26 @@ const G_DEFAULT_EMPLOYEES=[
   {name:'Ene',fullName:'Ediene Alves Torres',role:'Arremate',salary:2200,cpf:'335.651.278-13'},
 ];
 let gEmployees=[...G_DEFAULT_EMPLOYEES];
-const gRecurring=[
-  {name:'Gasolina — Ene',amount:250,desc:'Vale transporte fixo mensal'},
-  {name:'Gasolina — Jaque',amount:200,desc:'Vale transporte fixo mensal'},
-];
+// Gasolina por funcionária: campo "gas" (R$/mês) editável em Editar Funcionária
+const G_GAS_PADRAO={'Ene':250,'Jaque':200}; // valores antigos, usados só na primeira migração
+function gMigrarGas(){gEmployees.forEach(e=>{if(e.gas===undefined)e.gas=G_GAS_PADRAO[e.name]||0;});}
+function gGasNome(e){return 'Gasolina — '+e.name;}
+function gGasOf(ms,emp){const it=(ms.outros||[]).find(o=>o.recurring&&(o.gasEmp===emp.name||o.name===gGasNome(emp)));return it?it.amount:0;}
 let gState={};
 const G_LS='oficina_gestao_v1';
 
 function gGetMS(m,y){
   const k=monthKey(m,y);
-  if(!gState[k])gState[k]={revenue:70000,overtime:[],outros:[]};
+  const novo=!gState[k];
+  if(novo)gState[k]={revenue:70000,overtime:[],outros:[]};
   if(!gState[k].outros)gState[k].outros=[];
-  gRecurring.forEach(r=>{if(!gState[k].outros.some(o=>o.recurring&&o.name===r.name))gState[k].outros.unshift({...r,date:'fixo',recurring:true});});
+  gMigrarGas();
+  const hoje=new Date();
+  if(novo||y*12+m>=hoje.getFullYear()*12+hoje.getMonth()){
+    // mês atual e futuros: gasolina segue o cadastro das funcionárias (meses passados ficam como estão)
+    gState[k].outros=gState[k].outros.filter(o=>!(o.recurring&&/^Gasolina — /.test(o.name)));
+    gEmployees.filter(e=>e.gas>0).slice().reverse().forEach(e=>gState[k].outros.unshift({name:gGasNome(e),amount:e.gas,desc:'Vale transporte fixo mensal',date:'fixo',recurring:true,gasEmp:e.name}));
+  }
   return gState[k];
 }
 function gCalc13(s){return s/12;}
@@ -1718,7 +1727,7 @@ function gRender(){
   const maxSal=Math.max(...gEmployees.map(e=>e.salary),1);
   document.getElementById('gEmpBody').innerHTML=gEmployees.length===0?'<tr><td colspan="5" class="empty-state">Nenhuma funcionária</td></tr>':gEmployees.map((e,i)=>{
     const pct=folha>0?((e.salary/folha)*100).toFixed(0):0;
-    return `<tr><td><div class="emp-name-cell"><div class="emp-avatar av${i%10}">${initials(e.name)}</div><div><div class="emp-name">${e.name}</div><div style="font-size:0.6rem;color:var(--muted)">${e.role||''}</div></div></div></td><td><span class="emp-salary-val">${fmt0(e.salary)}</span></td><td style="color:var(--purple);font-size:0.75rem;font-family:'Playfair Display',serif;font-weight:600">${fmt2(gCalc13(e.salary))}</td><td style="color:var(--muted);font-size:0.7rem">${pct}%</td><td><div class="emp-actions"><button class="icon-btn" onclick="gOpenEditEmp(${i})">✏️</button><button class="icon-btn del" onclick="gRemoveEmp(${i})">✕</button></div></td></tr>`;
+    return `<tr><td><div class="emp-name-cell"><div class="emp-avatar av${i%10}">${initials(e.name)}</div><div><div class="emp-name">${e.name}</div><div style="font-size:0.6rem;color:var(--muted)">${e.role||''}${e.gas>0?` · 🚗 ${fmt0(e.gas)}`:''}</div></div></div></td><td><span class="emp-salary-val">${fmt0(e.salary)}</span></td><td style="color:var(--purple);font-size:0.75rem;font-family:'Playfair Display',serif;font-weight:600">${fmt2(gCalc13(e.salary))}</td><td style="color:var(--muted);font-size:0.7rem">${pct}%</td><td><div class="emp-actions"><button class="icon-btn" onclick="gOpenEditEmp(${i})">✏️</button><button class="icon-btn del" onclick="gRemoveEmp(${i})">✕</button></div></td></tr>`;
   }).join('');
 
   // OFICINA
@@ -1746,8 +1755,8 @@ function gRender(){
 // GESTÃO CRUD
 function gAddEmployee(){const name=document.getElementById('gEmpName').value.trim();const role=document.getElementById('gEmpRole').value.trim();const salary=parseFloat(document.getElementById('gEmpSalary').value);if(!name||!salary)return;gEmployees.push({name,role:role||'Colaboradora',salary});document.getElementById('gEmpName').value='';document.getElementById('gEmpRole').value='';document.getElementById('gEmpSalary').value='';gRender();}
 function gRemoveEmp(i){if(!confirm(`Remover ${gEmployees[i].name}?`))return;gEmployees.splice(i,1);gRender();}
-function gOpenEditEmp(i){gEditingEmpIdx=i;document.getElementById('gEditName').value=gEmployees[i].name;document.getElementById('gEditRole').value=gEmployees[i].role;document.getElementById('gEditSalary').value=gEmployees[i].salary;const cpfEl=document.getElementById('gEditCpf');if(cpfEl)cpfEl.value=gEmployees[i].cpf||'';document.getElementById('gEditModal').classList.add('open');}
-function gSaveEdit(){const name=document.getElementById('gEditName').value.trim();const role=document.getElementById('gEditRole').value.trim();const salary=parseFloat(document.getElementById('gEditSalary').value);const cpf=document.getElementById('gEditCpf')?.value.trim()||'';if(!name||!salary)return;const prev=gEmployees[gEditingEmpIdx]||{};gEmployees[gEditingEmpIdx]={...prev,name,role:role||'Colaboradora',salary,cpf:cpf||prev.cpf||''};closeAllModals();gRender();}
+function gOpenEditEmp(i){gEditingEmpIdx=i;document.getElementById('gEditName').value=gEmployees[i].name;document.getElementById('gEditRole').value=gEmployees[i].role;document.getElementById('gEditSalary').value=gEmployees[i].salary;const cpfEl=document.getElementById('gEditCpf');if(cpfEl)cpfEl.value=gEmployees[i].cpf||'';const gasEl=document.getElementById('gEditGas');if(gasEl)gasEl.value=gEmployees[i].gas||'';document.getElementById('gEditModal').classList.add('open');}
+function gSaveEdit(){const name=document.getElementById('gEditName').value.trim();const role=document.getElementById('gEditRole').value.trim();const salary=parseFloat(document.getElementById('gEditSalary').value);const cpf=document.getElementById('gEditCpf')?.value.trim()||'';if(!name||!salary)return;const gas=Math.max(0,parseFloat(document.getElementById('gEditGas')?.value)||0);const prev=gEmployees[gEditingEmpIdx]||{};gEmployees[gEditingEmpIdx]={...prev,name,role:role||'Colaboradora',salary,cpf:cpf||prev.cpf||'',gas};closeAllModals();gRender();}
 
 function gAddOutro(){const name=document.getElementById('gOutName').value.trim();const amount=parseFloat(document.getElementById('gOutAmount').value);const desc=document.getElementById('gOutDesc').value.trim();if(!name||!amount)return;const ms=gGetMS(gCurrentMonth,gCurrentYear);ms.outros.push({name,amount,desc,date:nowDate().slice(5).split('-').reverse().join('/')});document.getElementById('gOutName').value='';document.getElementById('gOutAmount').value='';document.getElementById('gOutDesc').value='';gRender();}
 function gRemoveOutro(i){gGetMS(gCurrentMonth,gCurrentYear).outros.splice(i,1);gRender();}
@@ -1961,8 +1970,7 @@ function hUpdatePreview(){
   const otVal50=otList.filter(o=>o.rate===50).reduce((s,o)=>s+o.value,0);
   const otHrs100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.hours,0);
   const otVal100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.value,0);
-  const gasItem=ms.outros.find(o=>o.recurring&&o.name.toLowerCase().includes(emp.name.toLowerCase().split(' ')[0]));
-  const gasVal=gasItem?gasItem.amount:0;
+  const gasVal=gGasOf(ms,emp);
   const totalDesc=totalVale+totalFalta;
   const liquido=emp.salary+empOT+gasVal-totalDesc;
   const mes=MONTHS_FULL[gCurrentMonth];
@@ -2017,8 +2025,7 @@ function hGerarPDFPara(empIdx){
   const otVal100=otList.filter(o=>o.rate===100).reduce((s,o)=>s+o.value,0);
   const otHrsTotal=otHrs50+otHrs100;
   const totalDesc=totalVale+totalFalta;
-  const gasItem=ms.outros.find(o=>o.recurring&&o.name.toLowerCase().includes(emp.name.toLowerCase().split(' ')[0]));
-  const gasVal=gasItem?gasItem.amount:0;
+  const gasVal=gGasOf(ms,emp);
   const totalDescFinal=totalDesc;
   const liquido=emp.salary+empOT+gasVal-totalDescFinal;
   const ano=gCurrentYear;
@@ -3115,8 +3122,7 @@ function gerarRelatorioMensal(){
     const empVales=vales.filter(v=>v.empIdx===i).reduce((s,v)=>s+v.amount,0);
     const empFaltas=faltas.filter(f=>f.empIdx===i);
     const descFalta=empFaltas.reduce((s,f)=>s+f.valor,0);
-    const gasItem=ms.outros.find(o=>o.recurring&&o.name.toLowerCase().includes(e.name.toLowerCase().split(' ')[0]));
-    const gas=gasItem?gasItem.amount:0;
+    const gas=gGasOf(ms,e);
     const heVal=otByEmp[i]?otByEmp[i].val:0;
     const heHrs=otByEmp[i]?otByEmp[i].hrs:0;
     const liquido=e.salary+heVal-empVales-descFalta-gas;
@@ -3305,7 +3311,7 @@ function gerarRelatorioMensal(){
         const ev=vales.filter(v=>v.empIdx===i).reduce((a,v)=>a+v.amount,0);
         const ef=faltas.filter(f=>f.empIdx===i).reduce((a,f)=>a+f.valor,0);
         const heV=otByEmp[i]?otByEmp[i].val:0;
-        const gas=(ms.outros.find(o=>o.recurring&&o.name.toLowerCase().includes(e.name.toLowerCase().split(' ')[0]))||{amount:0}).amount;
+        const gas=gGasOf(ms,e);
         return s+e.salary+heV-ev-ef-gas;
       },0))}</td>
     </tr></tfoot>
